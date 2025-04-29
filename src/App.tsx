@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import OutlineInput from "./components/OutlineInput";
-import PrimaryButton from "./components/PrimaryButton";
-import Todo from "./components/ToDo";
-import TextButton from "./components/TextButton";
+import OutlineInput from "./components/outline-input";
+import PrimaryButton from "./components/primary-button";
+import Todo from "./components/todo";
+import TextButton from "./components/text-button";
 
 interface Todo {
   isComplete: boolean;
@@ -37,8 +37,9 @@ function App() {
     setTodoList((currentList) => (getUncompletedTodo(currentList)));
   };
 
+  // ? DEBUG: todoList
   useEffect(() => {
-    console.log('todoList', todoList);
+    // console.log('todoList', todoList);
   }, [todoList]);
 
   return (
@@ -46,7 +47,7 @@ function App() {
       <h1 className="app-title">&#128466; To Do List</h1>
 
       <div className="app-form">
-        <OutlineInput
+				<OutlineInput
           value={inputValue}
           onChange={(v) => setInputValue(v)}
           placeholder="무엇을 해야 하나요?"
@@ -58,17 +59,19 @@ function App() {
       </div>
 
       <div className="app-list">
-				{todoList.map((todo, index) => (
+        {todoList.map((todo, index) => (
           <Todo
+            key={index}
             isComplete={todo.isComplete}
             value={todo.value}
             onClick={() => toggleTodo(index)}
+            deleteAllCompletedTodo={deleteAllCompletedTodo}
           />
         ))}
       </div>
 
       <div className='app-footer'>
-				<p>남은 일 :{getUncompletedTodo(todoList).length}개</p>
+        <p>남은 일 :{getUncompletedTodo(todoList).length}개</p>
         <TextButton
           label="완료 목록 삭제"
           onClick={() => deleteAllCompletedTodo()}
